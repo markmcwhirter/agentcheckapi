@@ -1,12 +1,18 @@
+using AgentCheckApi.Authentication;
+
 using FastEndpoints;
+using FastEndpoints.Swagger;
 
 using HealthChecks.UI.Client;
 using HealthChecks.UI.Configuration;
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+using NSwag;
 
 using Serilog;
 
@@ -50,7 +56,12 @@ public class Program
         builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
         builder.Services.AddProblemDetails();
 
-        builder.Services.AddFastEndpoints();
+
+        builder.Services
+           .AddFastEndpoints()
+           .AddAuthorization()
+           .AddAuthentication(ApikeyAuth.SchemeName)
+           .AddScheme<AuthenticationSchemeOptions, ApikeyAuth>(ApikeyAuth.SchemeName, null);
 
         // Add services to the container.
         builder.Services.AddAuthorization();
@@ -62,7 +73,20 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        builder.Services
+           .SwaggerDocument(o =>
+           {
+               o.EnableJWTBearerAuth = false;
+               o.DocumentSettings = s =>
+               {
+                   s.AddAuth(ApikeyAuth.SchemeName, new()
+                   {
+                       Name = ApikeyAuth.HeaderName,
+                       In = OpenApiSecurityApiKeyLocation.Header,
+                       Type = OpenApiSecuritySchemeType.ApiKey,
+                   });
+               };
+           });
 
         builder.Services
         .AddHealthChecks()
@@ -95,6 +119,7 @@ public class Program
 
         builder.Host.UseSerilog(Log.Logger);
 
+        // Build up application
         var app = builder.Build();
 
         app.UseCors(x => x
@@ -109,6 +134,9 @@ public class Program
         });
 
         app.UseExceptionHandler();
+
+        app.UseAuthorization();
+        app.UseAuthentication();
 
         app.UseFastEndpoints(c =>
         {
@@ -134,7 +162,6 @@ public class Program
 
         });
 
-        app.UseAuthorization();
 
         //app.UseExceptionHandlingMiddleware();
         app.Run();

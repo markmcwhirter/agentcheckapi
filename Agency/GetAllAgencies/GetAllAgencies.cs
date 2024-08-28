@@ -8,7 +8,7 @@ public class GetAllAgencies : EndpointWithoutRequest<GetAllAgenciesResponse>
     public override void Configure()
     {
         Get("/api/agencies");
-        Version(1);
+        Version(1);        
         AllowAnonymous();
     }
 
@@ -18,7 +18,7 @@ public class GetAllAgencies : EndpointWithoutRequest<GetAllAgenciesResponse>
         {
             Name = "Test Agency",
             TestAgency = true,
-            DateCreated = DateTime.Now,
+            DateCreated = DateTime.Now.AddDays(-10),
             DateUpdated = DateTime.Now
         });
     }
