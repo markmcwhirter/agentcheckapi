@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentCheckApi", "AgentCheckApi.csproj", "{AB026242-152E-4C0B-AECF-44D83FBF2518}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB026242-152E-4C0B-AECF-44D83FBF2518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB026242-152E-4C0B-AECF-44D83FBF2518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB026242-152E-4C0B-AECF-44D83FBF2518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB026242-152E-4C0B-AECF-44D83FBF2518}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEAFEA59-0E10-45E8-87DD-138B56B9749A}
+	EndGlobalSection
+EndGlobal
